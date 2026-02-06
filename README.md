@@ -1,95 +1,151 @@
-dotfiles
+# Dotfiles
 
-This repository contains my **macOS terminal setup** including Zsh, Tmux, Powerlevel10k, Ghostty, and related configurations. It is designed for a **minimal, fast, and highly productive terminal workflow**, with popup windows, Git integration, project tools, and system information on startup.
+Cross-platform terminal setup for **macOS**, **Linux**, and **WSL**. Includes Zsh, Tmux, Powerlevel10k, Neovim, and related configurations for a minimal, fast, and productive terminal workflow.
 
 ---
 
 ## Features
 
-### Shell
-
-- **Zsh** with `.zshrc` configuration
-- **Powerlevel10k** (`.p10k.zsh`) for an aesthetic and informative prompt
-- Safe **tmux auto-start** from Zsh
-- **Fastfetch** for system information display on shell start
-- Vi-mode navigation in shell
+### Shell (Zsh)
+- **Oh-My-Zsh** with Powerlevel10k theme
+- OS detection (macOS/Linux/WSL) with platform-specific config
+- **Fastfetch** system info on shell start
+- Auto-start **tmux** session
+- WSL-specific: Windows integration aliases (`explorer`, `clip`, `winopen`)
 
 ### Tmux
-
-- **Popup windows** for:
-  - LazyGit
-  - LazyDocker
-  - LazySQL
+- **Popup windows** for LazyGit, LazyDocker, LazySQL
 - **Vi-style keybindings** for pane navigation
-- Mouse support
-- Catppuccin Mocha theme
+- Mouse support with clipboard integration
+- **Catppuccin Mocha** theme
 - TPM (Tmux Plugin Manager) integration
+- Cross-platform clipboard (pbcopy/clip.exe)
 
 ### Git
+- `.gitconfig` with sensible defaults
+- Work machine support (prompts for identity during install)
 
-- `.gitconfig` for personal preferences
-- `.gitignore` optimized for macOS, caches, and editor files
+### Terminal
+- **Ghostty** config (macOS)
+- Windows Terminal compatible (WSL)
 
-### Ghostty
-
-- Launches Zsh automatically
-- Integrates with tmux and popup workflows
-
-### Optional Tools
-
-- Neovim integration (`nvim` popups)
-- File/folder management via tmux popups
-- Minimal VS Code–like workflow in terminal
+### Neovim
+- Config directory ready for your setup
+- Recommended: LazyVim, NvChad, or AstroNvim
 
 ---
 
-## Installation
+## Quick Start
 
-Clone the repository:
+### Clone the repository
 
 ```bash
-git clone git@github.com:your-username/dotfiles-mac.git ~/dotfiles
-cd ~/dotfiles - depending on what directory you've cloned into
+git clone git@github.com:your-username/dotfiles.git ~/Documents/dotfiles
+cd ~/Documents/dotfiles
+```
 
-Make the installer executable and run it:
+### Run the installer
+
+```bash
 chmod +x install.sh
 ./install.sh
+```
 
-### What install.sh does
+The installer will:
+1. Detect your OS (macOS/Linux/WSL)
+2. Ask if this is a work machine (for git identity)
+3. Install packages (brew/apt)
+4. Install Oh-My-Zsh + Powerlevel10k
+5. Install TPM + tmux plugins
+6. Install Nerd Fonts (Linux/WSL)
+7. Create symlinks to your home directory
+8. Set Zsh as default shell
 
-1. Backs up existing dotfiles in ~/dotfiles_backup
-2. Creates symlinks from this repository to your home directory:
-	.zshrc
-	.tmux.conf
-	.p10k.zsh
-	.Any other tracked dotfiles
-3. Installs TPM (Tmux Plugin Manager) if not already installed
-4. Prints instructions for the first-time plugin installation
+---
 
-## Post-installation
+## WSL Setup
 
-1. Open Ghostty or any terminal:
-	- Zsh loads automatically
-	- Tmux auto-starts if not already running
-	- Fastfetch displays system information
-2. Install Tmux plugins (first run):
+### Prerequisites
+1. **Windows Terminal** (recommended)
+2. **Ubuntu** from Microsoft Store
+3. Run the installer inside WSL
 
-# Inside tmux
-Ctrl + s I   # Capital I installs all TPM plugins
+### After Installation
+1. **Install MesloLGS NF font in Windows**:
+   - Download from [Powerlevel10k fonts](https://github.com/romkatv/powerlevel10k#fonts)
+   - Install all 4 TTF files in Windows
+   
+2. **Configure Windows Terminal**:
+   - Settings → Profiles → Ubuntu → Appearance
+   - Set font to "MesloLGS NF"
+   - Optional: Enable acrylic/transparency
 
-3. Editing dotfiles
-	- Files are tracked in ~/dotfiles
-	- Changes automatically reflect in your home directory via symlinks
-	- No need to edit both the home directory and the repository
+3. **Restart your terminal**
 
-## Recommended Terminal Setup
-	- Terminal with truecolor support: Ghostty, Kitty, iTerm2
-	- Nerd font installed for Powerlevel10k icons
-	- Optional: Neovim for editing and scripting within terminal popups
+### WSL-Specific Aliases
+| Alias | Description |
+|-------|-------------|
+| `explorer` | Open Windows Explorer |
+| `winopen` | Open current directory in Explorer |
+| `clip` | Copy to Windows clipboard |
+| `cdwin` | Navigate to Windows home folder |
+
+---
+
+## Post-Installation
+
+### First tmux run
+```bash
+# Inside tmux, install plugins:
+Ctrl+b I   # Capital I
+```
+
+### Customize prompt
+```bash
+p10k configure
+```
+
+### Editing dotfiles
+Files are symlinked from `~/Documents/dotfiles` - edit there and changes apply immediately.
+
+---
+
+## Directory Structure
+
+```
+dotfiles/
+├── zsh/
+│   └── .zshrc          # Zsh configuration
+├── tmux/
+│   └── .tmux.conf      # Tmux configuration
+├── p10k/
+│   └── .p10k.zsh       # Powerlevel10k theme
+├── git/
+│   └── .gitconfig      # Git configuration
+├── ghostty/
+│   └── config          # Ghostty terminal (macOS)
+├── nvim/
+│   └── (your config)   # Neovim configuration
+├── scripts/
+│   └── install.sh      # Additional scripts
+└── install.sh          # Bootstrap installer
+```
+
+---
+
+## Required Tools
+
+Installed automatically by `install.sh`:
+- zsh, tmux, neovim, git, curl, fzf
+- lazygit, lazydocker, fastfetch
+- ripgrep, fd
+- win32yank (WSL only)
+
+---
 
 ## Notes
 
-	- This repository is macOS-focused; Linux or WSL support can be added via OS-specific folders or conditional .zshrc sourcing.
-	- Sensitive files are not tracked (e.g., .ssh/, .zsh_history)
-	- Caches and temporary files are ignored via .gitignore
-	- Popups and workflows assume installed tools: lazygit, lazydocker, lazysql, lazyvim, yazi
+- Sensitive files (`.ssh/`, `.zsh_history`) are not tracked
+- Work machines prompt for git identity (no credentials stored)
+- WSL uses `clip.exe` for clipboard integration
+- Popups require: lazygit, lazydocker, lazysql
