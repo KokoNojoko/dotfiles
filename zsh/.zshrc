@@ -7,7 +7,7 @@ command -v lazysql >/dev/null 2>&1 || alias lazysql="echo 'lazysql not installed
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-plugins=(git)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -36,6 +36,16 @@ alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias nvimconfig="nvim ~/.config/nvim"
 alias lg="lazygit"
 alias ld="lazydocker"
+
+# Navigation shortcuts
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# Better ls
+alias ll="ls -lah"
+alias la="ls -A"
+alias l="ls -CF"
 
 # ================================
 # OS-Specific Configuration
@@ -92,9 +102,9 @@ export PATH="$HOME/.local/bin:$PATH"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ================================
-# Fastfetch on shell start
+# Fastfetch on shell start (only in new tmux sessions)
 # ================================
-if command -v fastfetch &> /dev/null; then
+if command -v fastfetch &> /dev/null && [[ -n "$TMUX" ]] && [[ $(tmux display-message -p '#{window_panes}') -eq 1 ]] && [[ $(tmux display-message -p '#{pane_index}') -eq 1 ]]; then
   fastfetch
 fi
 
