@@ -27,6 +27,7 @@ Cross-platform terminal setup for **macOS**, **Linux**, and **WSL**. Includes Zs
 
 ### Terminal
 - **Ghostty** config (macOS)
+- **Sketchybar** status bar (macOS) - spaces, music, battery, CPU, clock
 - Windows Terminal compatible (WSL)
 
 ### Neovim
@@ -124,6 +125,11 @@ dotfiles/
 │   └── .gitconfig      # Git configuration
 ├── ghostty/
 │   └── config          # Ghostty terminal (macOS)
+├── sketchybar/
+│   ├── sketchybarrc    # Main config
+│   ├── variables.sh    # Colors and variables
+│   ├── items/          # Bar item definitions
+│   └── plugins/        # Scripts for each item
 ├── nvim/
 │   └── (your config)   # Neovim configuration
 ├── scripts/
@@ -139,6 +145,7 @@ Installed automatically by `install.sh`:
 - zsh, tmux, neovim, git, curl, fzf
 - lazygit, lazydocker, fastfetch
 - ripgrep, fd
+- sketchybar (macOS only)
 - win32yank (WSL only)
 
 ---

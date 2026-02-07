@@ -61,7 +61,7 @@ install_packages() {
             print_step "Installing Homebrew..."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
-        brew install zsh tmux neovim git curl fzf lazygit lazydocker fastfetch ripgrep fd
+        brew install zsh tmux neovim git curl fzf lazygit lazydocker fastfetch ripgrep fd sketchybar
         
     elif [[ "$OS" == "Linux" ]]; then
         # Linux/WSL - use apt (Ubuntu/Debian)
@@ -255,6 +255,13 @@ link_dotfiles() {
         mkdir -p "$GHOSTTY_DIR"
         ln -sf "$DOTFILES/ghostty/config" "$GHOSTTY_DIR/config"
         print_success "Linked Ghostty config"
+    fi
+    
+    # Sketchybar (macOS only)
+    if [[ "$OS" == "Darwin" ]]; then
+        mkdir -p "$HOME/.config"
+        ln -sf "$DOTFILES/sketchybar" "$HOME/.config/sketchybar"
+        print_success "Linked Sketchybar config"
     fi
 }
 
