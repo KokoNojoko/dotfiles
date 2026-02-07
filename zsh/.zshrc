@@ -112,6 +112,6 @@ fi
 # Auto-start tmux
 # ================================
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach || tmux new || echo "tmux failed, continuing in shell"
+  tmux new-session || echo "tmux failed, continuing in shell"
 fi
 source /Users/boikokobetsonojoko/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
