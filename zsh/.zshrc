@@ -7,7 +7,7 @@ command -v lazysql >/dev/null 2>&1 || alias lazysql="echo 'lazysql not installed
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting fzf)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting you-should-use zsh-bat z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -16,7 +16,7 @@ source $ZSH/oh-my-zsh.sh
 # ================================
 case "$OSTYPE" in
   darwin*)   export OS_TYPE="mac" ;;
-  linux*)    
+  linux*)
     if grep -qi microsoft /proc/version 2>/dev/null; then
       export OS_TYPE="wsl"
     else
@@ -53,7 +53,7 @@ alias l="ls -CF"
 if [[ "$OS_TYPE" == "mac" ]]; then
     # macOS-specific aliases
     alias ghosttycfg='nvim "$HOME/Library/Application Support/com.mitchellh.ghostty/config"'
-    
+
     # .NET (macOS path)
     export DOTNET_ROOT="/usr/local/share/dotnet"
     export PATH="$DOTNET_ROOT:$PATH"
@@ -65,17 +65,17 @@ if [[ "$OS_TYPE" == "wsl" ]]; then
     alias open="explorer.exe"
     alias clip="clip.exe"
     alias pwsh="powershell.exe"
-    
+
     # Open current directory in Windows Explorer
     alias winopen='explorer.exe $(wslpath -w .)'
-    
+
     # .NET (Linux path)
     export DOTNET_ROOT="$HOME/.dotnet"
     export PATH="$DOTNET_ROOT:$DOTNET_ROOT/tools:$PATH"
-    
+
     # Fix interop for some WSL setups
     export WSL_INTEROP_PATH="/run/WSL"
-    
+
     # Windows home directory shortcut
     export WINHOME="/mnt/c/Users/$(cmd.exe /c 'echo %USERNAME%' 2>/dev/null | tr -d '\r')"
     alias cdwin='cd "$WINHOME"'
@@ -114,3 +114,4 @@ fi
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   tmux attach || tmux new || echo "tmux failed, continuing in shell"
 fi
+source /Users/boikokobetsonojoko/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
