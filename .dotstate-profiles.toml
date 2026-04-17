@@ -1,0 +1,44 @@
+version = 2
+
+[common]
+synced_files = []
+
+[[profiles]]
+name = "ghostty"
+synced_files = []
+packages = []
+
+[[profiles]]
+name = "git"
+synced_files = []
+packages = []
+
+[[profiles]]
+name = "p10k"
+synced_files = []
+packages = []
+
+[[profiles]]
+name = "sketchybar"
+synced_files = []
+packages = []
+
+[[profiles]]
+name = "tmux"
+synced_files = []
+packages = []
+
+[[profiles]]
+name = "zsh"
+synced_files = []
+packages = []
+
+[[profiles]]
+name = "scripts"
+synced_files = []
+packages = []
+
+[[profiles]]
+name = "nvim"
+synced_files = []
+packages = []

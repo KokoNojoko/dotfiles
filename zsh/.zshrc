@@ -36,6 +36,8 @@ alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias nvimconfig="nvim ~/.config/nvim"
 alias lg="lazygit"
 alias ld="lazydocker"
+alias cs="./scripts/cs"
+alias hris="~/Documents/company-suite/"
 
 # Navigation shortcuts
 alias ..="cd .."
@@ -114,4 +116,5 @@ fi
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   tmux new-session || echo "tmux failed, continuing in shell"
 fi
-source /Users/boikokobetsonojoko/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export PATH="$HOME/.nvm/versions/node/v24.11.1/bin:$PATH"
