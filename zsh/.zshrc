@@ -38,6 +38,8 @@ alias lg="lazygit"
 alias ld="lazydocker"
 alias cs="./scripts/cs"
 alias hris="~/Documents/company-suite/"
+alias sonnet="claude --model claude-sonnet-4-6"
+alias opus="claude --model claude-opus-4-6"
 
 # Navigation shortcuts
 alias ..="cd .."
@@ -118,3 +120,6 @@ if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
 fi
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export PATH="$HOME/.nvm/versions/node/v24.11.1/bin:$PATH"
+export ANTHROPIC_MODEL="claude-sonnet-4-6"
+export ANTHROPIC_MODEL="claude-opus-4-6"
+export ANTHROPIC_MODEL="claude-opus-4-5-20251101"

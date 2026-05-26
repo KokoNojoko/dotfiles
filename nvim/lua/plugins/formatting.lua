@@ -8,8 +8,8 @@ return {
       },
       formatters = {
         csharpier = {
-          command = "csharpier",
-          args = { "format", "--stdin-path", "$FILENAME", "--write-stdout" },
+          command = "dotnet-csharpier",
+          args = { "--write-stdout" },
           stdin = true,
           env = { DOTNET_ROOT = "/usr/lib/dotnet" },
         },

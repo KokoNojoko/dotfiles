@@ -60,19 +60,3 @@ map("n", "<leader>bD", "<cmd>bd!<cr>", { desc = "Delete buffer (force)" })
 -- Quick toggle file explorer
 map("n", "<C-b>", "<cmd>Neotree toggle<cr>", { desc = "Toggle file explorer" })
 map("n", "<C-e>", "<cmd>Neotree toggle<cr>", { desc = "Toggle file explorer" })
-
--- ================================
--- Copilot Chat
--- ================================
--- Explicit toggle for Copilot Chat
-map("n", "<leader>cc", "<cmd>CopilotChatToggle<cr>", { desc = "Toggle Copilot Chat" })
-map("v", "<leader>cc", "<cmd>CopilotChatToggle<cr>", { desc = "Toggle Copilot Chat" })
-
--- Quick actions
-map("n", "<leader>ce", "<cmd>CopilotChatExplain<cr>", { desc = "Explain code" })
-map("v", "<leader>ce", "<cmd>CopilotChatExplain<cr>", { desc = "Explain selection" })
-map("n", "<leader>cr", "<cmd>CopilotChatReview<cr>", { desc = "Review code" })
-map("v", "<leader>cr", "<cmd>CopilotChatReview<cr>", { desc = "Review selection" })
-map("n", "<leader>ct", "<cmd>CopilotChatTests<cr>", { desc = "Generate tests" })
-map("v", "<leader>ct", "<cmd>CopilotChatTests<cr>", { desc = "Generate tests" })
-map("n", "<leader>cm", "<cmd>CopilotChatCommit<cr>", { desc = "Generate commit message" })
