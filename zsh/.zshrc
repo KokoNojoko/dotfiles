@@ -118,8 +118,5 @@ fi
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   tmux new-session || echo "tmux failed, continuing in shell"
 fi
-source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export PATH="$HOME/.nvm/versions/node/v24.11.1/bin:$PATH"
 export ANTHROPIC_MODEL="claude-sonnet-4-6"
-export ANTHROPIC_MODEL="claude-opus-4-6"
-export ANTHROPIC_MODEL="claude-opus-4-5-20251101"

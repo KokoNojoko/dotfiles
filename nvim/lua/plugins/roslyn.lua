@@ -20,7 +20,7 @@ return {
       silent = false,
     },
     init = function()
-      vim.env.DOTNET_ROOT = "/usr/lib/dotnet"
+      vim.env.DOTNET_ROOT = os.getenv("DOTNET_ROOT") or "/usr/lib/dotnet"
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
