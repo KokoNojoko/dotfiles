@@ -14,9 +14,9 @@ return {
     ---@module 'roslyn.config'
     ---@type RoslynNvimConfig
     opts = {
-      filewatching = "auto",
+      filewatching = false,
       broad_search = false,
-      lock_target = false,
+      lock_target = true,
       silent = false,
     },
     init = function()
@@ -30,29 +30,32 @@ return {
           vim.keymap.set("n", "<leader>cA", function()
             vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } })
           end, { buffer = buf, desc = "Source Action" })
+          client:notify("workspace/didChangeConfiguration", {
+            settings = {
+              ["csharp|inlay_hints"] = {
+                csharp_enable_inlay_hints_for_implicit_object_creation = false,
+                csharp_enable_inlay_hints_for_implicit_variable_types = false,
+              },
+              ["csharp|code_lens"] = {
+                dotnet_enable_references_code_lens = false,
+              },
+              ["csharp|background_analysis"] = {
+                dotnet_analyzer_diagnostics_scope = "openFiles",
+                dotnet_compiler_diagnostics_scope = "openFiles",
+              },
+              ["csharp|completion"] = {
+                dotnet_show_completion_items_from_unimported_namespaces = false,
+              },
+              ["csharp|symbol_search"] = {
+                dotnet_search_reference_assemblies = false,
+              },
+            },
+          })
         end,
       })
     end,
     config = function(_, opts)
       require("roslyn").setup(opts)
-      vim.schedule(function()
-        vim.api.nvim_exec_autocmds("FileType", { pattern = "cs", modeline = false })
-      end)
-      vim.lsp.config("roslyn", {
-        settings = {
-          ["csharp|inlay_hints"] = {
-            csharp_enable_inlay_hints_for_implicit_object_creation = false,
-            csharp_enable_inlay_hints_for_implicit_variable_types = false,
-          },
-          ["csharp|code_lens"] = {
-            dotnet_enable_references_code_lens = false,
-          },
-          ["csharp|background_analysis"] = {
-            dotnet_analyzer_diagnostics_scope = "openFiles",
-            dotnet_compiler_diagnostics_scope = "openFiles",
-          },
-        },
-      })
     end,
   },
 }

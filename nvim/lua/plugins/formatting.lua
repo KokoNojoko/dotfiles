@@ -11,6 +11,7 @@ return {
           command = "dotnet-csharpier",
           args = { "--write-stdout" },
           stdin = true,
+          timeout_ms = 45000,
           env = { DOTNET_ROOT = "/usr/lib/dotnet" },
         },
       },

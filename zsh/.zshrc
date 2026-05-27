@@ -30,7 +30,7 @@ esac
 # Common Aliases
 # ================================
 alias zshconfig="nvim ~/.zshrc"
-alias tmuxreload="tmux source ~/.tmux.conf"
+alias tmuxconfig="nvim ~/.config/tmux/tmux.conf.local"
 alias zshreload="source ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias nvimconfig="nvim ~/.config/nvim"
