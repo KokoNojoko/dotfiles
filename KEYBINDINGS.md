@@ -11,50 +11,50 @@ Quick reference for all custom keybindings across the dotfiles setup.
 | Keybind | Mode | Action |
 |---------|------|--------|
 | `Ctrl+S` | n/i/v | Save file |
-| `Ctrl+Shift+S` | n/i/v | Save all files |
-| `Ctrl+Q` | n | Quit all (exit nvim) |
-| `leader+Q` | n | Quit all (alternative) |
-| `leader+W` | n | Save and close buffer |
-| `leader+qq` | n | Quit all windows |
+| `Ctrl+B` | n | Toggle file explorer (Neo-tree) |
+| `Ctrl+\` | t | Close terminal |
 
-### File Explorer (Neo-tree)
+### Movement
 
 | Keybind | Mode | Action |
 |---------|------|--------|
-| `Ctrl+B` | n | Toggle file explorer |
-| `Ctrl+E` | n | Toggle file explorer |
-| `leader+e` | n | Toggle file explorer (LazyVim default) |
+| `Ctrl+D` | n | Scroll down (centered) |
+| `Ctrl+U` | n | Scroll up (centered) |
+| `n` / `N` | n | Next/prev search result (centered) |
+| `Ctrl+H/J/K/L` | n | Navigate between splits |
 
-### Buffers
+### Editing
 
 | Keybind | Mode | Action |
 |---------|------|--------|
-| `Shift+H` | n | Previous buffer |
-| `Shift+L` | n | Next buffer |
-| `leader+bd` | n | Delete buffer |
-| `leader+bD` | n | Delete buffer (force) |
+| `J` | v | Move selection down |
+| `K` | v | Move selection up |
+| `J` | n | Join lines (cursor stays) |
+| `leader+p` | x | Paste without overwriting register |
+| `leader+d` | n/v | Delete to void register |
+| `leader+sr` | n | Replace word under cursor (global) |
 
 ### Formatting
 
 | Keybind | Mode | Action |
 |---------|------|--------|
-| `Ctrl+Shift+F` | n/v | Format file (VS Code style) |
-| `Alt+Shift+F` | n/v | Format file (terminal fallback) |
+| `Alt+Shift+F` | n/v | Format file |
 | `leader+cf` | n/v | Format file (LazyVim default) |
 
-### Copilot & AI
+### Harpoon
 
 | Keybind | Mode | Action |
 |---------|------|--------|
-| `Tab` | i | Accept Copilot suggestion |
-| `Alt+]` | i | Next Copilot suggestion |
-| `Alt+[` | i | Previous Copilot suggestion |
-| `Ctrl+]` | i | Dismiss Copilot suggestion |
-| `leader+cc` | n/v | Toggle Copilot Chat |
-| `leader+ce` | n/v | Explain code |
-| `leader+cr` | n/v | Review code |
-| `leader+ct` | n/v | Generate tests |
-| `leader+cm` | n | Generate commit message |
+| `leader+a` | n | Add file to Harpoon list |
+| `Ctrl+N` | n | Toggle Harpoon menu |
+| `leader+1-5` | n | Jump to Harpoon file 1–5 |
+
+### Quickfix
+
+| Keybind | Mode | Action |
+|---------|------|--------|
+| `leader+qn` | n | Next quickfix item |
+| `leader+qp` | n | Prev quickfix item |
 
 ### Search & Navigation (LazyVim defaults)
 
@@ -69,36 +69,44 @@ Quick reference for all custom keybindings across the dotfiles setup.
 | `gr` | n | Go to references |
 | `K` | n | Hover documentation |
 
-### Windows & Splits
+### Buffers (LazyVim defaults)
 
 | Keybind | Mode | Action |
 |---------|------|--------|
-| `Ctrl+h/j/k/l` | n | Navigate between windows |
-| `leader+-` | n | Split horizontal |
-| `leader+\|` | n | Split vertical |
-| `leader+wd` | n | Delete window |
+| `Shift+H` | n | Previous buffer |
+| `Shift+L` | n | Next buffer |
+| `leader+bd` | n | Delete buffer |
 
 ### LSP
 
 | Keybind | Mode | Action |
 |---------|------|--------|
 | `leader+ca` | n/v | Code actions |
-| `leader+cr` | n | Rename symbol |
+| `leader+cA` | n | Source actions |
 | `leader+cd` | n | Line diagnostics |
 | `[d` / `]d` | n | Previous/next diagnostic |
+
+### Splits (LazyVim defaults)
+
+| Keybind | Mode | Action |
+|---------|------|--------|
+| `leader+-` | n | Split horizontal |
+| `leader+\|` | n | Split vertical |
+| `leader+wd` | n | Delete window |
 
 ---
 
 ## Tmux
 
 ### Prefix Key
-Default prefix: `Ctrl+B`
+Custom prefix: `Ctrl+Z`
 
 ### Session Management
 
 | Keybind | Action |
 |---------|--------|
 | `prefix+d` | Detach from session |
+| `prefix+$` | Rename session |
 | `prefix+J` | Session switcher (fzf popup) |
 | `prefix+K` | Kill sessions (fzf popup) |
 
@@ -107,13 +115,11 @@ Default prefix: `Ctrl+B`
 | Keybind | Action |
 |---------|--------|
 | `prefix+c` | Create new window |
-| `prefix+n` | Next window |
-| `prefix+p` | Previous window |
-| `prefix+b` | Previous window (custom) |
+| `prefix+b` | Previous window |
+| `prefix+,` | Rename window |
+| `prefix+&` | Kill window |
 | `Alt+H` | Previous window |
 | `Alt+L` | Next window |
-| `prefix+&` | Kill window |
-| `prefix+,` | Rename window |
 
 ### Panes
 
@@ -132,7 +138,7 @@ Default prefix: `Ctrl+B`
 |---------|--------|
 | `prefix+[` | Enter copy mode |
 | `v` | Begin selection |
-| `y` | Copy selection |
+| `y` | Copy selection (+ clipboard) |
 | `q` | Exit copy mode |
 
 ### Popup Tools
@@ -140,16 +146,17 @@ Default prefix: `Ctrl+B`
 | Keybind | Action |
 |---------|--------|
 | `prefix+g` | LazyGit popup |
-| `prefix+d` | LazyDocker popup |
+| `prefix+D` | LazyDocker popup |
 | `prefix+s` | LazySQL popup |
 | `prefix+f` | Tool launcher (fzf) |
 
-### Menu
+### Config & Menu
 
 | Keybind | Action |
 |---------|--------|
-| `prefix+m` | Dotfiles menu |
+| `prefix+M` | Dotfiles menu (.zshrc / tmux.conf.local) |
 | `prefix+r` | Reload tmux config |
+| `prefix+m` | Toggle mouse on/off |
 
 ---
 
@@ -163,8 +170,10 @@ Default prefix: `Ctrl+B`
 | `ld` | lazydocker |
 | `zshconfig` | Edit .zshrc in nvim |
 | `zshreload` | Reload .zshrc |
-| `tmuxreload` | Reload tmux config |
+| `tmuxconfig` | Edit tmux.conf.local in nvim |
 | `nvimconfig` | Edit nvim config |
+| `sonnet` | claude --model claude-sonnet-4-6 |
+| `opus` | claude --model claude-opus-4-6 |
 
 ### WSL-Specific Aliases
 
@@ -187,7 +196,6 @@ Default prefix: `Ctrl+B`
 
 ## Notes
 
-- `leader` in Neovim is `Space` by default in LazyVim
-- `n` = normal mode, `i` = insert mode, `v` = visual mode
-- `prefix` in tmux is `Ctrl+B` by default
-- Some terminal emulators may not support `Ctrl+Shift+` combos; use `Alt+Shift+` alternatives
+- `leader` in Neovim is `Space` (LazyVim default)
+- `n` = normal mode, `i` = insert mode, `v` = visual/x mode, `t` = terminal mode
+- `prefix` in tmux is `Ctrl+Z`

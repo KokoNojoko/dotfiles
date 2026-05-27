@@ -9,17 +9,17 @@ Cross-platform terminal setup for **macOS**, **Linux**, and **WSL**. Includes Zs
 ### Shell (Zsh)
 - **Oh-My-Zsh** with Powerlevel10k theme
 - OS detection (macOS/Linux/WSL) with platform-specific config
-- **Fastfetch** system info on shell start
+- **Fastfetch** system info on shell start (tmux sessions only)
 - Auto-start **tmux** session
 - WSL-specific: Windows integration aliases (`explorer`, `clip`, `winopen`)
 
 ### Tmux
+- **oh-my-tmux** framework with Catppuccin Mocha theme
+- Prefix remapped to `Ctrl+Z`
 - **Popup windows** for LazyGit, LazyDocker, LazySQL
 - **Vi-style keybindings** for pane navigation
-- Mouse support with clipboard integration
-- **Catppuccin Mocha** theme
-- TPM (Tmux Plugin Manager) integration
-- Cross-platform clipboard (pbcopy/clip.exe)
+- Mouse support with clipboard integration (WSL: clip.exe, macOS: pbcopy)
+- vim-tmux-navigator for seamless Neovim/tmux pane switching
 
 ### Git
 - `.gitconfig` with sensible defaults
@@ -31,8 +31,11 @@ Cross-platform terminal setup for **macOS**, **Linux**, and **WSL**. Includes Zs
 - Windows Terminal compatible (WSL)
 
 ### Neovim
-- Config directory ready for your setup
-- Recommended: LazyVim, NvChad, or AstroNvim
+- **LazyVim** with Catppuccin Mocha colorscheme
+- **roslyn.nvim** for C# / .NET LSP
+- **conform.nvim** with csharpier formatter
+- **Harpoon 2** for fast file navigation
+- OS-aware DOTNET_ROOT (macOS/Linux/WSL)
 
 ---
 
@@ -57,7 +60,7 @@ The installer will:
 2. Ask if this is a work machine (for git identity)
 3. Install packages (brew/apt)
 4. Install Oh-My-Zsh + Powerlevel10k
-5. Install TPM + tmux plugins
+5. Install oh-my-tmux + TPM plugins
 6. Install Nerd Fonts (Linux/WSL)
 7. Create symlinks to your home directory
 8. Set Zsh as default shell
@@ -98,7 +101,7 @@ The installer will:
 ### First tmux run
 ```bash
 # Inside tmux, install plugins:
-Ctrl+b I   # Capital I
+Ctrl+z I   # Capital I
 ```
 
 ### Customize prompt
@@ -116,25 +119,25 @@ Files are symlinked from `~/Documents/dotfiles` - edit there and changes apply i
 ```
 dotfiles/
 ├── zsh/
-│   └── .zshrc          # Zsh configuration
+│   └── .zshrc              # Zsh configuration
 ├── tmux/
-│   └── .tmux.conf      # Tmux configuration
+│   └── tmux.conf.local     # oh-my-tmux customization (symlinked to ~/.config/tmux/)
 ├── p10k/
-│   └── .p10k.zsh       # Powerlevel10k theme
+│   └── .p10k.zsh           # Powerlevel10k theme
 ├── git/
-│   └── .gitconfig      # Git configuration
+│   └── .gitconfig          # Git configuration
 ├── ghostty/
-│   └── config          # Ghostty terminal (macOS)
+│   └── config              # Ghostty terminal (macOS)
 ├── sketchybar/
-│   ├── sketchybarrc    # Main config
-│   ├── variables.sh    # Colors and variables
-│   ├── items/          # Bar item definitions
-│   └── plugins/        # Scripts for each item
+│   ├── sketchybarrc        # Main config
+│   ├── variables.sh        # Colors and variables
+│   ├── items/              # Bar item definitions
+│   └── plugins/            # Scripts for each item
 ├── nvim/
-│   └── (your config)   # Neovim configuration
+│   └── lua/                # Neovim (LazyVim) configuration
 ├── scripts/
-│   └── install.sh      # Additional scripts
-└── install.sh          # Bootstrap installer
+│   └── install.sh          # Additional scripts
+└── install.sh              # Bootstrap installer
 ```
 
 ---
@@ -156,3 +159,4 @@ Installed automatically by `install.sh`:
 - Work machines prompt for git identity (no credentials stored)
 - WSL uses `clip.exe` for clipboard integration
 - Popups require: lazygit, lazydocker, lazysql
+- oh-my-tmux config lives at `~/.config/tmux/tmux.conf.local` (XDG path)
