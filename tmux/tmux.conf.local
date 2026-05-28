@@ -207,7 +207,7 @@ if-shell 'uname | grep -q Darwin' {
 
 # Reload config
 unbind r
-bind-key r source-file ~/.config/tmux/tmux.conf \; display-message "tmux config reloaded"
+bind-key r source-file ~/.tmux.conf \; display-message "tmux config reloaded"
 
 # Vim-style pane navigation
 bind-key h select-pane -L

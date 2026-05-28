@@ -158,12 +158,37 @@ install_powerlevel10k() {
 }
 
 # ================================
+# Oh-My-Tmux
+# ================================
+
+install_oh_my_tmux() {
+    print_step "Installing oh-my-tmux..."
+
+    if [[ ! -f "$HOME/.tmux/.tmux.conf" ]]; then
+        # Preserve existing plugins if ~/.tmux already exists
+        if [[ -d "$HOME/.tmux/plugins" ]]; then
+            cp -r "$HOME/.tmux/plugins" /tmp/tmux-plugins-backup
+        fi
+        rm -rf "$HOME/.tmux"
+        git clone https://github.com/gpakosz/.tmux.git "$HOME/.tmux"
+        if [[ -d /tmp/tmux-plugins-backup ]]; then
+            mkdir -p "$HOME/.tmux/plugins"
+            cp -r /tmp/tmux-plugins-backup/. "$HOME/.tmux/plugins/"
+            rm -rf /tmp/tmux-plugins-backup
+        fi
+        print_success "oh-my-tmux installed"
+    else
+        print_success "oh-my-tmux already installed"
+    fi
+}
+
+# ================================
 # TPM (Tmux Plugin Manager)
 # ================================
 
 install_tpm() {
     print_step "Installing TPM (Tmux Plugin Manager)..."
-    
+
     TPM_DIR="$HOME/.tmux/plugins/tpm"
     if [[ ! -d "$TPM_DIR" ]]; then
         git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
@@ -236,13 +261,16 @@ link_dotfiles() {
     ln -sf "$DOTFILES/p10k/.p10k.zsh" "$HOME/.p10k.zsh"
     print_success "Linked .p10k.zsh"
     
-    # Tmux
-    ln -sf "$DOTFILES/tmux/.tmux.conf" "$HOME/.tmux.conf"
-    print_success "Linked .tmux.conf"
+    # Tmux: ~/.tmux.conf must point to oh-my-tmux base; ~/.tmux.conf.local holds customizations
+    ln -sf "$HOME/.tmux/.tmux.conf" "$HOME/.tmux.conf"
+    ln -sf "$DOTFILES/tmux/tmux.conf.local" "$HOME/.tmux.conf.local"
+    print_success "Linked .tmux.conf (oh-my-tmux base) and .tmux.conf.local"
     
     # Neovim config
     mkdir -p "$HOME/.config"
     if [[ -d "$DOTFILES/nvim" ]]; then
+        # Remove existing dir/symlink so ln -sf creates the symlink at the right level
+        rm -rf "$HOME/.config/nvim"
         ln -sf "$DOTFILES/nvim" "$HOME/.config/nvim"
         print_success "Linked nvim config"
     else
@@ -335,6 +363,7 @@ main() {
     install_packages
     install_oh_my_zsh
     install_powerlevel10k
+    install_oh_my_tmux
     install_tpm
     install_catppuccin_tmux
     install_nerd_font
