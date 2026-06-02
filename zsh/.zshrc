@@ -74,8 +74,8 @@ if [[ "$OS_TYPE" == "wsl" ]]; then
     alias winopen='explorer.exe $(wslpath -w .)'
 
     # .NET (Linux path)
-    export DOTNET_ROOT="$HOME/.dotnet"
-    export PATH="$DOTNET_ROOT:$DOTNET_ROOT/tools:$PATH"
+    export DOTNET_ROOT="/usr/lib/dotnet"
+    export PATH="$DOTNET_ROOT:$HOME/.dotnet/tools:$PATH"
 
     # Fix interop for some WSL setups
     export WSL_INTEROP_PATH="/run/WSL"
@@ -87,8 +87,8 @@ fi
 
 if [[ "$OS_TYPE" == "linux" ]]; then
     # Native Linux config
-    export DOTNET_ROOT="$HOME/.dotnet"
-    export PATH="$DOTNET_ROOT:$DOTNET_ROOT/tools:$PATH"
+    export DOTNET_ROOT="/usr/lib/dotnet"
+    export PATH="$DOTNET_ROOT:$HOME/.dotnet/tools:$PATH"
 fi
 
 # ================================

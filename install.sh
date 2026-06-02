@@ -54,23 +54,26 @@ fi
 
 install_packages() {
     print_step "Installing packages..."
-    
+
     if [[ "$OS" == "Darwin" ]]; then
         # macOS - use Homebrew
         if ! command -v brew &> /dev/null; then
             print_step "Installing Homebrew..."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
-        brew install zsh tmux neovim git curl fzf lazygit lazydocker fastfetch ripgrep fd sketchybar
-        
+        print_step "Installing Homebrew packages..."
+        xargs brew install < "$DOTFILES/packages/brew.txt"
+        print_step "Installing Homebrew cask apps..."
+        xargs brew install --cask < "$DOTFILES/packages/brew-cask.txt"
+
     elif [[ "$OS" == "Linux" ]]; then
         # Linux/WSL - use apt (Ubuntu/Debian)
         if command -v apt &> /dev/null; then
             print_step "Updating apt..."
             sudo apt update
-            
+
             print_step "Installing core packages..."
-            sudo apt install -y zsh tmux git curl fzf ripgrep fd-find unzip fontconfig
+            xargs -a "$DOTFILES/packages/apt.txt" sudo apt install -y
             
             # Neovim (latest via appimage or PPA)
             print_step "Installing Neovim..."
@@ -115,6 +118,21 @@ install_packages() {
                     chmod +x /tmp/win32yank.exe
                     sudo mv /tmp/win32yank.exe /usr/local/bin/
                     rm /tmp/win32yank.zip
+                fi
+
+                # Windows apps via winget
+                if command -v winget.exe &> /dev/null; then
+                    print_step "Installing Windows apps via winget..."
+                    while IFS= read -r app_id || [[ -n "$app_id" ]]; do
+                        [[ -z "$app_id" || "$app_id" == \#* ]] && continue
+                        winget.exe install --id "$app_id" -e \
+                            --accept-package-agreements --accept-source-agreements \
+                            --silent 2>/dev/null \
+                            && print_success "winget: $app_id" \
+                            || print_warning "winget: $app_id failed or already installed"
+                    done < "$DOTFILES/packages/winget.txt"
+                else
+                    print_warning "winget.exe not found - skipping Windows app installs"
                 fi
             fi
         else
@@ -341,21 +359,6 @@ set_default_shell() {
 }
 
 # ================================
-# Install Tmux Plugins
-# ================================
-
-install_tmux_plugins() {
-    print_step "Installing Tmux plugins..."
-    
-    if [[ -f "$HOME/.tmux/plugins/tpm/bin/install_plugins" ]]; then
-        "$HOME/.tmux/plugins/tpm/bin/install_plugins"
-        print_success "Tmux plugins installed"
-    else
-        print_warning "TPM not found - run 'prefix + I' in tmux to install plugins"
-    fi
-}
-
-# ================================
 # Main Installation
 # ================================
 
@@ -370,7 +373,6 @@ main() {
     link_dotfiles
     configure_git
     set_default_shell
-    install_tmux_plugins
     
     echo ""
     echo "================================"
@@ -380,7 +382,7 @@ main() {
     echo "Next steps:"
     echo "  1. Restart your terminal"
     echo "  2. Run 'p10k configure' if you want to customize the prompt"
-    echo "  3. In tmux, press 'prefix + I' to install plugins"
+    echo "  3. Start tmux — plugins install automatically on first launch"
     
     if [[ "$IS_WSL" == true ]]; then
         echo ""

@@ -30,8 +30,8 @@ map("n", "J", "mzJ`z", { desc = "Join lines (cursor stays)" })
 -- Paste without losing register
 map("x", "<leader>p", [["_dP]], { desc = "Paste without overwriting register" })
 
--- Delete to void register
-map({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to void register" })
+-- Delete to void register (using <leader>x to avoid conflict with DAP's <leader>d prefix)
+map({ "n", "v" }, "<leader>x", [["_d]], { desc = "Delete to void register" })
 
 -- ================================
 -- Quick substitution

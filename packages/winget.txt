@@ -1,0 +1,5 @@
+# Windows apps installed via winget
+# Verify IDs with: winget search <name>
+GlazeWM.GlazeWM
+AmN.yasb
+Flow-Launcher.Flow-Launcher

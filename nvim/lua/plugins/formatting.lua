@@ -8,11 +8,11 @@ return {
       },
       formatters = {
         csharpier = {
-          command = "dotnet-csharpier",
+          command = vim.fn.expand("~/.dotnet/tools/dotnet-csharpier"),
           args = { "--write-stdout" },
           stdin = true,
           timeout_ms = 45000,
-          env = { DOTNET_ROOT = os.getenv("DOTNET_ROOT") or "/usr/lib/dotnet" },
+          env = { DOTNET_ROOT = "/usr/lib/dotnet" },
         },
       },
     },

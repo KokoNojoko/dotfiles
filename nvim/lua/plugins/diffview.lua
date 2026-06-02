@@ -18,13 +18,13 @@ return {
       },
       keymaps = {
         merge_tool = {
-          { "n", "<leader>co", actions.conflict_choose("ours"),   desc = "Choose Ours" },
-          { "n", "<leader>ct", actions.conflict_choose("theirs"), desc = "Choose Theirs" },
-          { "n", "<leader>cb", actions.conflict_choose("base"),   desc = "Choose Base" },
-          { "n", "<leader>cA", actions.conflict_choose("all"),    desc = "Choose All" },
-          { "n", "<leader>cx", actions.conflict_choose("none"),   desc = "Delete Conflict" },
-          { "n", "]x",         actions.next_conflict,             desc = "Next Conflict" },
-          { "n", "[x",         actions.prev_conflict,             desc = "Prev Conflict" },
+          { "n", "<leader>mo", actions.conflict_choose("ours"),   { desc = "Merge: choose ours" } },
+          { "n", "<leader>mt", actions.conflict_choose("theirs"), { desc = "Merge: choose theirs" } },
+          { "n", "<leader>mb", actions.conflict_choose("base"),   { desc = "Merge: choose base" } },
+          { "n", "<leader>ma", actions.conflict_choose("all"),    { desc = "Merge: choose all" } },
+          { "n", "<leader>mx", actions.conflict_choose("none"),   { desc = "Merge: delete conflict" } },
+          { "n", "]x",         actions.next_conflict,             { desc = "Next conflict" } },
+          { "n", "[x",         actions.prev_conflict,             { desc = "Prev conflict" } },
         },
       },
     }

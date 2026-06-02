@@ -1,0 +1,13 @@
+zsh
+tmux
+neovim
+git
+curl
+fzf
+lazygit
+lazydocker
+fastfetch
+ripgrep
+fd
+sketchybar
+git-delta

@@ -25,6 +25,14 @@
 
 [merge]
 	conflictstyle = zdiff3
+	tool = diffview
+
+[mergetool]
+	keepBackup = false
+
+[mergetool "diffview"]
+	cmd = nvim -c "DiffviewOpen" "$MERGED"
+	trustExitCode = false
 
 [diff]
 	algorithm = histogram

@@ -1,0 +1,10 @@
+zsh
+tmux
+git
+curl
+fzf
+ripgrep
+fd-find
+unzip
+fontconfig
+git-delta
