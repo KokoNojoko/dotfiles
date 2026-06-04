@@ -320,12 +320,16 @@ link_dotfiles() {
         ln -sf "$DOTFILES/bottombar" "$HOME/.config/bottombar"
         print_success "Linked Bottombar config"
 
-        # Create bottombar symlink if it doesn't exist
+        # Create bottombar binary copy if it doesn't exist
         if command -v sketchybar &> /dev/null && ! command -v bottombar &> /dev/null; then
-            SKETCHYBAR_PATH=$(which sketchybar)
-            sudo ln -sf "$SKETCHYBAR_PATH" /usr/local/bin/bottombar
-            print_success "Created bottombar symlink"
+            sudo cp "$(which sketchybar)" /usr/local/bin/bottombar
+            print_success "Created bottombar binary"
         fi
+
+        # Aerospace
+        mkdir -p "$HOME/.config/aerospace"
+        ln -sf "$DOTFILES/aerospace/aerospace.toml" "$HOME/.config/aerospace/aerospace.toml"
+        print_success "Linked Aerospace config"
     fi
 }
 
