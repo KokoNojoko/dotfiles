@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-case "$SENDER" in
-"front_app_switched")
-    sketchybar --set "$NAME" label="$INFO"
-    ;;
-esac
+if [ "$SENDER" = "front_app_switched" ]; then
+  sketchybar --set "$NAME" label="$INFO"
+fi

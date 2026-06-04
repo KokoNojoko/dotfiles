@@ -20,12 +20,15 @@ return {
       silent = false,
     },
     init = function()
-      vim.env.DOTNET_ROOT = "/usr/lib/dotnet"
+      vim.env.DOTNET_ROOT = "/usr/local/share/dotnet"
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if not client or client.name ~= "roslyn" then return end
           local buf = args.buf
+          -- Workaround: Neovim 0.12.x inlay_hint.lua sets extmarks with invalid
+          -- col when Roslyn sends hints at line-end positions (upstream bug).
+          vim.lsp.inlay_hint.enable(false, { bufnr = buf })
           vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
           vim.keymap.set("n", "<leader>cA", function()
             vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } })

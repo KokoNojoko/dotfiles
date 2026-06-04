@@ -1,57 +1,167 @@
 #!/usr/bin/env bash
 
-source "$HOME/.config/sketchybar/variables.sh" # Loads all defined colors
+source "$HOME/.config/colors.sh"
+source "$HOME/.config/icons.sh"
 
-# General bar and defaults
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+FONT="JetBrainsMono Nerd Font"
 
-sketchybar --bar height=30 \
-	color="$BAR_COLOR" \
-	shadow="$SHADOW" \
-	position=top \
-	sticky=on \
-	padding_right=0 \
-	padding_left=3 \
-	corner_radius="$CORNER_RADIUS" \
-	y_offset=5 \
-	margin=5 \
-	blur_radius=20 \
-	notch_width=200 \
-	--default updates=when_shown \
-	icon.font="$FONT:Bold:13.5" \
-	icon.color="$ICON_COLOR" \
-	icon.padding_left="$PADDINGS" \
-	icon.padding_right="$PADDINGS" \
-	label.font="$FONT:Bold:13.0" \
-	label.color="$LABEL_COLOR" \
-	label.padding_left="$PADDINGS" \
-	label.padding_right="$PADDINGS" \
-	background.padding_right="$PADDINGS" \
-	background.padding_left="$PADDINGS" \
-	popup.background.border_width=1 \
-	popup.background.corner_radius=11 \
-	popup.background.border_color="$POPUP_BORDER_COLOR" \
-	popup.background.color="$POPUP_BACKGROUND_COLOR" \
-	popup.background.shadow.drawing="$SHADOW"
+sketchybar --bar color=0x00000000 height=40 margin=0 y_offset=3 padding_left=8 padding_right=8 sticky=on topmost=window
 
-# Left
-# source "$ITEM_DIR/apple.sh"
-source "$ITEM_DIR/spaces.sh"
-source "$ITEM_DIR/front_app.sh"
+sketchybar --default padding_left=8 padding_right=4                    \
+                     background.border_color=$COLOR_DEFAULT             \
+                     background.border_width=2                         \
+                     background.height=40                              \
+                     background.corner_radius=12                       \
+                     icon.color=$COLOR_DEFAULT                          \
+                     icon.highlight_color=$COLOR_BACKGROUND            \
+                     icon.padding_left=8 icon.padding_right=4          \
+                     icon.font="$FONT:Regular:16.0"                    \
+                     label.color=$COLOR_DEFAULT                         \
+                     label.highlight_color=$COLOR_BACKGROUND           \
+                     label.padding_left=4 label.padding_right=8        \
+                     label.font="$FONT:Bold:12.0"
 
-# Center (of notch)
-source "$ITEM_DIR/music.sh"
+sketchybar --add event aerospace_workspace_change
 
-# Right
-source "$ITEM_DIR/clock.sh"
-source "$ITEM_DIR/calendar.sh"
-source "$ITEM_DIR/battery.sh"
-source "$ITEM_DIR/volume.sh"
-source "$ITEM_DIR/cpu.sh"
+# === Left: App logo ===
+sketchybar --add item logo left \
+           --set logo script="$PLUGIN_DIR/logo.sh" \
+                      background.border_width=0 \
+                      background.height=24 \
+                      icon=$ICON_APPLE \
+           --subscribe logo front_app_switched space_change
 
-#################### Finalizing Setup ####################
+sketchybar --add bracket apple logo \
+           --set apple background.color=$COLOR_BACKGROUND background.border_color=$COLOR_DEFAULT
+
+sketchybar --add item seperator.r0 left \
+           --set seperator.r0 padding_left=4 padding_right=4 background.drawing=off icon.drawing=off label.drawing=off
+
+# === Left: Window title ===
+sketchybar --add item title left \
+           --set title script="$PLUGIN_DIR/title.sh" \
+                       padding_left=2 padding_right=8 \
+                       background.border_width=0 \
+                       background.height=24 \
+           --subscribe title front_app_switched space_change
+
+sketchybar --add bracket window title \
+           --set window background.color=$COLOR_BACKGROUND background.border_color=$COLOR_DEFAULT
+
+sketchybar --add item seperator.r1 left \
+           --set seperator.r1 padding_left=4 padding_right=4 background.drawing=off icon.drawing=off label.drawing=off
+
+# === Left: Music player ===
+sketchybar --add item music.icon left \
+           --set music.icon icon=$ICON_MUSIC \
+                            icon.color=$COLOR_DEFAULT \
+                            padding_left=8 padding_right=0 \
+                            icon.padding_left=4 icon.padding_right=4 \
+                            label.drawing=off \
+                            background.color=$COLOR_SURFACE1 \
+                            background.border_width=0 \
+                            background.corner_radius=6 \
+                            background.height=24
+
+sketchybar --add item music.title left \
+           --set music.title label="" \
+                             label.max_chars=35 \
+                             scroll_texts=on \
+                             padding_left=0 padding_right=8 \
+                             background.border_width=0 \
+                             background.height=24
+
+sketchybar --add item music.anchor left \
+           --set music.anchor script="$PLUGIN_DIR/music.sh" \
+                              update_freq=5 \
+                              drawing=off \
+           --subscribe music.anchor media_change
+
+sketchybar --add bracket music music.icon music.title \
+           --set music background.color=$COLOR_BACKGROUND background.border_color=$COLOR_DEFAULT
+
+# === Right: Control Center ===
+sketchybar --add item centre right \
+           --set centre icon.color=$COLOR_DEFAULT \
+                        background.color=$COLOR_BACKGROUND \
+                        icon=$ICON_CMD \
+                        padding_left=6 padding_right=4 \
+                        icon.padding_left=8 icon.padding_right=0 \
+                        background.border_width=0 \
+                        background.corner_radius=6 \
+                        background.height=24 \
+                        click_script="osascript -e 'tell application \"System Events\" to click menu bar item 2 of menu bar 1 of application process \"ControlCenter\"'"
+
+sketchybar --add bracket control centre \
+           --set control background.color=$COLOR_BACKGROUND background.border_color=$COLOR_DEFAULT
+
+sketchybar --add item seperator.r2 right \
+           --set seperator.r2 padding_left=4 padding_right=4 background.drawing=off icon.drawing=off label.drawing=off
+
+# === Right: Privacy indicators ===
+sketchybar --add item microphone right \
+           --set microphone script="$PLUGIN_DIR/microphone.sh" \
+                            update_freq=1 \
+                            padding_left=4 padding_right=8 \
+                            icon.padding_left=4 icon.padding_right=4 \
+                            label.drawing=off \
+                            background.border_width=0 \
+                            background.corner_radius=6 \
+                            background.height=24
+
+sketchybar --add item screenrec right \
+           --set screenrec script="$PLUGIN_DIR/screenrec.sh" \
+                           update_freq=1 \
+                           padding_left=8 padding_right=4 \
+                           icon.padding_left=4 icon.padding_right=4 \
+                           label.drawing=off \
+                           background.border_width=0 \
+                           background.corner_radius=6 \
+                           background.height=24
+
+sketchybar --add bracket privacy microphone screenrec \
+           --set privacy background.color=$COLOR_BACKGROUND background.border_color=$COLOR_DEFAULT
+
+sketchybar --add item seperator.r3 right \
+           --set seperator.r3 padding_left=4 padding_right=4 background.drawing=off icon.drawing=off label.drawing=off
+
+# === Right: Status (wifi, volume, battery) ===
+sketchybar --add item wifi right \
+           --set wifi script="$PLUGIN_DIR/wifi.sh" \
+                      update_freq=5 \
+                      padding_left=2 padding_right=8 \
+                      background.border_width=0 \
+                      background.corner_radius=6 \
+                      background.height=24 \
+                      icon.highlight=on label.highlight=on \
+                      click_script="osascript -e 'tell application \"System Events\" to click menu bar item 3 of menu bar 1 of application process \"ControlCenter\"'" \
+           --subscribe wifi wifi_change
+
+sketchybar --add item volume right \
+           --set volume script="$PLUGIN_DIR/volume.sh" \
+                        padding_left=4 padding_right=4 \
+                        background.border_width=0 \
+                        background.corner_radius=6 \
+                        background.height=24 \
+                        click_script="osascript -e 'tell application \"System Events\" to click menu bar item 4 of menu bar 1 of application process \"ControlCenter\"'" \
+           --subscribe volume volume_change
+
+sketchybar --add item battery right \
+           --set battery script="$PLUGIN_DIR/battery.sh" \
+                         update_freq=120 \
+                         padding_left=8 padding_right=2 \
+                         background.border_width=0 \
+                         background.corner_radius=6 \
+                         background.height=24 \
+                         click_script="osascript -e 'tell application \"System Events\" to click menu bar item 5 of menu bar 1 of application process \"ControlCenter\"'" \
+           --subscribe battery system_woke power_source_change
+
+sketchybar --add bracket status wifi volume battery \
+           --set status background.color=$COLOR_BACKGROUND background.border_color=$COLOR_DEFAULT
+
+sketchybar --add item seperator.r5 right \
+           --set seperator.r5 padding_left=4 padding_right=4 background.drawing=off icon.drawing=off label.drawing=off
 
 sketchybar --hotload true
-
 sketchybar --update
-
-echo "sketchybar configuration loaded.."

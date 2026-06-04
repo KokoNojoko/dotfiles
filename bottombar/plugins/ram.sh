@@ -3,33 +3,38 @@
 source "$HOME/.config/colors.sh"
 source "$HOME/.config/icons.sh"
 
-VOLUME=$(osascript -e 'set ovol to output volume of (get volume settings)')
+MEMORY=$(memory_pressure | grep "System-wide memory free percentage:" | awk '{ printf("%02.0f\n", 100-$5"%") }')
 
-case $VOLUME in
+case $MEMORY in
 [8-9][0-9] | 100)
-	ICON=${ICONS_VOLUME[3]}
+	ICON=$ICON_RAM
 	BCOLOR=$COLOR_RED_BRIGHT
 	COLOR=$COLOR_BACKGROUND
 	;;
-[6-7][0-9])
-	ICON=${ICONS_VOLUME[2]}
+[6-8][0-9])
+	ICON=$ICON_RAM
 	BCOLOR=$COLOR_ORANGE_BRIGHT
 	COLOR=$COLOR_BACKGROUND
 	;;
-[2-3][0-9] | [4-5][0-9])
-	ICON=${ICONS_VOLUME[1]}
+[3-5][0-9])
+	ICON=$ICON_RAM
 	BCOLOR=$COLOR_YELLOW_BRIGHT
 	COLOR=$COLOR_BACKGROUND
 	;;
-*)
-	ICON=${ICONS_VOLUME[0]}
+[1-9] | [1-2][0-9])
+	ICON=$ICON_RAM
 	BCOLOR=$COLOR_DEFAULT
 	COLOR=$COLOR_BACKGROUND
 	;;
+*)
+	ICON=$ICON_RAM
+	BCOLOR=$COLOR_BACKGROUND
+	COLOR=$COLOR_DEFAULT
+	;;
 esac
 
-sketchybar --set $NAME icon=$ICON \
+bottombar --set $NAME icon=$ICON \
 	icon.color=$COLOR \
 	background.color=$BCOLOR \
-	label="$VOLUME%" \
+	label="$MEMORY%" \
 	label.color=$COLOR

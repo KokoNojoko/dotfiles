@@ -303,11 +303,29 @@ link_dotfiles() {
         print_success "Linked Ghostty config"
     fi
     
-    # Sketchybar (macOS only)
+    # Shared theme files (macOS only)
     if [[ "$OS" == "Darwin" ]]; then
         mkdir -p "$HOME/.config"
+        ln -sf "$DOTFILES/colors.sh" "$HOME/.config/colors.sh"
+        ln -sf "$DOTFILES/icons.sh" "$HOME/.config/icons.sh"
+        print_success "Linked shared theme files (colors.sh, icons.sh)"
+
+        # Sketchybar (top bar)
+        rm -rf "$HOME/.config/sketchybar"
         ln -sf "$DOTFILES/sketchybar" "$HOME/.config/sketchybar"
         print_success "Linked Sketchybar config"
+
+        # Bottombar (bottom bar — second sketchybar instance)
+        rm -rf "$HOME/.config/bottombar"
+        ln -sf "$DOTFILES/bottombar" "$HOME/.config/bottombar"
+        print_success "Linked Bottombar config"
+
+        # Create bottombar symlink if it doesn't exist
+        if command -v sketchybar &> /dev/null && ! command -v bottombar &> /dev/null; then
+            SKETCHYBAR_PATH=$(which sketchybar)
+            sudo ln -sf "$SKETCHYBAR_PATH" /usr/local/bin/bottombar
+            print_success "Created bottombar symlink"
+        fi
     fi
 }
 
