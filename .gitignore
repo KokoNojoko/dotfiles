@@ -46,8 +46,8 @@ __pycache__/
 # ================================
 # Neovim
 # ================================
-nvim/.repro/
-nvim/lazy-lock.json
+shared/nvim/.repro/
+shared/nvim/lazy-lock.json
 
 # ================================
 # Editor / plugin caches

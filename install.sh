@@ -272,52 +272,50 @@ link_dotfiles() {
     print_step "Linking dotfiles..."
     
     # Zsh
-    ln -sf "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+    ln -sf "$DOTFILES/shared/zsh/.zshrc" "$HOME/.zshrc"
     print_success "Linked .zshrc"
-    
+
     # Powerlevel10k config
-    ln -sf "$DOTFILES/p10k/.p10k.zsh" "$HOME/.p10k.zsh"
+    ln -sf "$DOTFILES/shared/p10k/.p10k.zsh" "$HOME/.p10k.zsh"
     print_success "Linked .p10k.zsh"
-    
+
     # Tmux: ~/.tmux.conf must point to oh-my-tmux base; ~/.tmux.conf.local holds customizations
     ln -sf "$HOME/.tmux/.tmux.conf" "$HOME/.tmux.conf"
-    ln -sf "$DOTFILES/tmux/tmux.conf.local" "$HOME/.tmux.conf.local"
+    ln -sf "$DOTFILES/shared/tmux/tmux.conf.local" "$HOME/.tmux.conf.local"
     print_success "Linked .tmux.conf (oh-my-tmux base) and .tmux.conf.local"
-    
+
     # Neovim config
     mkdir -p "$HOME/.config"
-    if [[ -d "$DOTFILES/nvim" ]]; then
-        # Remove existing dir/symlink so ln -sf creates the symlink at the right level
+    if [[ -d "$DOTFILES/shared/nvim" ]]; then
         rm -rf "$HOME/.config/nvim"
-        ln -sf "$DOTFILES/nvim" "$HOME/.config/nvim"
+        ln -sf "$DOTFILES/shared/nvim" "$HOME/.config/nvim"
         print_success "Linked nvim config"
     else
         print_warning "No nvim config in dotfiles - skipping"
     fi
-    
-    # Ghostty (macOS only)
+
+    # macOS-only configs
     if [[ "$OS" == "Darwin" ]]; then
+        # Ghostty
         GHOSTTY_DIR="$HOME/Library/Application Support/com.mitchellh.ghostty"
         mkdir -p "$GHOSTTY_DIR"
-        ln -sf "$DOTFILES/ghostty/config" "$GHOSTTY_DIR/config"
+        ln -sf "$DOTFILES/macos/ghostty/config" "$GHOSTTY_DIR/config"
         print_success "Linked Ghostty config"
-    fi
-    
-    # Shared theme files (macOS only)
-    if [[ "$OS" == "Darwin" ]]; then
+
+        # Shared theme files
         mkdir -p "$HOME/.config"
-        ln -sf "$DOTFILES/colors.sh" "$HOME/.config/colors.sh"
-        ln -sf "$DOTFILES/icons.sh" "$HOME/.config/icons.sh"
-        print_success "Linked shared theme files (colors.sh, icons.sh)"
+        ln -sf "$DOTFILES/macos/colors.sh" "$HOME/.config/colors.sh"
+        ln -sf "$DOTFILES/macos/icons.sh" "$HOME/.config/icons.sh"
+        print_success "Linked theme files (colors.sh, icons.sh)"
 
         # Sketchybar (top bar)
         rm -rf "$HOME/.config/sketchybar"
-        ln -sf "$DOTFILES/sketchybar" "$HOME/.config/sketchybar"
+        ln -sf "$DOTFILES/macos/sketchybar" "$HOME/.config/sketchybar"
         print_success "Linked Sketchybar config"
 
         # Bottombar (bottom bar — second sketchybar instance)
         rm -rf "$HOME/.config/bottombar"
-        ln -sf "$DOTFILES/bottombar" "$HOME/.config/bottombar"
+        ln -sf "$DOTFILES/macos/bottombar" "$HOME/.config/bottombar"
         print_success "Linked Bottombar config"
 
         # Create bottombar binary copy if it doesn't exist
@@ -328,7 +326,7 @@ link_dotfiles() {
 
         # Aerospace
         mkdir -p "$HOME/.config/aerospace"
-        ln -sf "$DOTFILES/aerospace/aerospace.toml" "$HOME/.config/aerospace/aerospace.toml"
+        ln -sf "$DOTFILES/macos/aerospace/aerospace.toml" "$HOME/.config/aerospace/aerospace.toml"
         print_success "Linked Aerospace config"
     fi
 }
@@ -353,7 +351,7 @@ configure_git() {
         print_warning "Remember to set up SSH keys or access tokens for GitLab"
     else
         # Personal machine - link the dotfiles gitconfig
-        ln -sf "$DOTFILES/git/.gitconfig" "$HOME/.gitconfig"
+        ln -sf "$DOTFILES/shared/git/.gitconfig" "$HOME/.gitconfig"
         print_success "Linked .gitconfig"
     fi
     

@@ -118,26 +118,21 @@ Files are symlinked from `~/Documents/dotfiles` - edit there and changes apply i
 
 ```
 dotfiles/
-├── zsh/
-│   └── .zshrc              # Zsh configuration
-├── tmux/
-│   └── tmux.conf.local     # oh-my-tmux customization (symlinked to ~/.config/tmux/)
-├── p10k/
-│   └── .p10k.zsh           # Powerlevel10k theme
-├── git/
-│   └── .gitconfig          # Git configuration
-├── ghostty/
-│   └── config              # Ghostty terminal (macOS)
-├── sketchybar/
-│   ├── sketchybarrc        # Main config
-│   ├── variables.sh        # Colors and variables
-│   ├── items/              # Bar item definitions
-│   └── plugins/            # Scripts for each item
-├── nvim/
-│   └── lua/                # Neovim (LazyVim) configuration
-├── scripts/
-│   └── install.sh          # Additional scripts
-└── install.sh              # Bootstrap installer
+├── macos/                      # macOS-only configs
+│   ├── sketchybar/             # Top status bar (Catppuccin Mocha)
+│   ├── bottombar/              # Bottom status bar (system monitoring)
+│   ├── aerospace/              # Aerospace window manager
+│   ├── ghostty/                # Ghostty terminal emulator
+│   ├── colors.sh               # Catppuccin Mocha color palette
+│   └── icons.sh                # Nerd Font icon definitions
+├── shared/                     # Cross-platform configs
+│   ├── zsh/                    # Zsh configuration
+│   ├── p10k/                   # Powerlevel10k theme
+│   ├── nvim/                   # Neovim (LazyVim) configuration
+│   ├── tmux/                   # oh-my-tmux customization
+│   └── git/                    # Git configuration
+├── packages/                   # Package lists (brew, apt, winget)
+└── install.sh                  # Bootstrap installer (cross-platform)
 ```
 
 ---
