@@ -3,7 +3,7 @@
 source "$HOME/.config/colors.sh"
 source "$HOME/.config/icons.sh"
 
-if [ -n "$INFO" ]; then
+if [ "$SENDER" = "front_app_switched" ] && [ -n "$INFO" ]; then
   LABEL="$INFO"
 else
   LABEL=$(aerospace list-windows --focused --format '%{app-name}' 2>/dev/null | head -1)
