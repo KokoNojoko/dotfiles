@@ -314,15 +314,25 @@ link_dotfiles() {
         print_success "Linked Sketchybar config"
 
         # Bottombar (bottom bar — second sketchybar instance)
+        # Copy (not symlink) so launchd can read it without ~/Documents TCC permission
         rm -rf "$HOME/.config/bottombar"
-        ln -sf "$DOTFILES/macos/bottombar" "$HOME/.config/bottombar"
-        print_success "Linked Bottombar config"
+        cp -r "$DOTFILES/macos/bottombar" "$HOME/.config/bottombar"
+        print_success "Copied Bottombar config"
 
         # Create bottombar binary copy if it doesn't exist
         if command -v sketchybar &> /dev/null && ! command -v bottombar &> /dev/null; then
             sudo cp "$(which sketchybar)" /usr/local/bin/bottombar
             print_success "Created bottombar binary"
         fi
+
+        # Bottombar LaunchAgent (auto-start on login)
+        mkdir -p "$HOME/Library/LaunchAgents"
+        PLIST_SRC="$DOTFILES/macos/bottombar/com.user.bottombar.plist"
+        PLIST_DST="$HOME/Library/LaunchAgents/com.user.bottombar.plist"
+        sed "s|/Users/boikokobetsonojoko|$HOME|g" "$PLIST_SRC" > "$PLIST_DST"
+        launchctl unload "$PLIST_DST" 2>/dev/null
+        launchctl load "$PLIST_DST"
+        print_success "Loaded Bottombar LaunchAgent"
 
         # Aerospace
         mkdir -p "$HOME/.config/aerospace"

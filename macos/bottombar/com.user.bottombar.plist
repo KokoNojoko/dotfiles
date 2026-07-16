@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.user.bottombar</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/bin/bottombar</string>
+		<string>--config</string>
+		<string>/Users/boikokobetsonojoko/.config/bottombar/sketchybarrc</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>HOME</key>
+		<string>/Users/boikokobetsonojoko</string>
+		<key>LANG</key>
+		<string>en_US.UTF-8</string>
+		<key>PATH</key>
+		<string>/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+	</dict>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+	<key>ProcessType</key>
+	<string>Interactive</string>
+	<key>LimitLoadToSessionType</key>
+	<array>
+		<string>Aqua</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/tmp/bottombar.err.log</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/bottombar.out.log</string>
+</dict>
+</plist>
