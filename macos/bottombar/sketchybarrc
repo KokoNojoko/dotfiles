@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# The bottombar binary lives in /usr/local/bin. Every command below calls it by
+# bare name, so guarantee it is on PATH — a launcher without /usr/local/bin
+# makes all of them fail silently and the bar comes up empty.
+export PATH="/usr/local/bin:$PATH"
+
 source "$HOME/.config/colors.sh"
 source "$HOME/.config/icons.sh"
 

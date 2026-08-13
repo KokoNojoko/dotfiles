@@ -7,9 +7,11 @@ config-version = 2
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = [
-    'exec-and-forget pkill -9 -x bottombar; sleep 1; /usr/local/bin/bottombar --config ~/.config/bottombar/sketchybarrc'
-]
+# NOTE: bottombar is started by the com.user.bottombar LaunchAgent, not here.
+# Starting it here raced the LaunchAgent for bottombar's lock file, and
+# AeroSpace's environment lacks /usr/local/bin on PATH, so the bare `bottombar`
+# calls inside sketchybarrc failed and the bar came up empty.
+after-startup-command = []
 
 # Notify sketchybar on workspace changes
 exec-on-workspace-change = ['/bin/bash', '-c',
