@@ -38,8 +38,6 @@ alias lg="lazygit"
 alias ld="lazydocker"
 alias cs="./scripts/cs"
 alias hris="~/Documents/company-suite/"
-alias sonnet="claude --model claude-sonnet-4-6"
-alias opus="claude --model claude-opus-4-6"
 
 # Navigation shortcuts
 alias ..="cd .."
@@ -119,4 +117,3 @@ if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   tmux new-session || echo "tmux failed, continuing in shell"
 fi
 export PATH="$HOME/.nvm/versions/node/v24.11.1/bin:$PATH"
-export ANTHROPIC_MODEL="claude-sonnet-4-6"
