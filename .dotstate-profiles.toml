@@ -1,0 +1,26 @@
+version = 2
+
+[common]
+synced_files = [".tmux.conf.local"]
+
+[[profiles]]
+name = "Personal-Mac"
+description = "Personal laptop setup"
+synced_files = [
+    ".config/aerospace/aerospace.toml",
+    ".config/colors.sh",
+    ".config/icons.sh",
+    ".config/nvim",
+    ".config/sketchybar",
+    ".gitconfig",
+    ".p10k.zsh",
+    ".zshrc",
+    "Library/Application Support/com.mitchellh.ghostty/config",
+]
+packages = []
+
+[[profiles]]
+name = "Work-Wsl"
+description = "Work laptop setup"
+synced_files = []
+packages = []
