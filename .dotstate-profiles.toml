@@ -8,6 +8,7 @@ name = "Personal-Mac"
 description = "Personal laptop setup"
 synced_files = [
     ".config/aerospace/aerospace.toml",
+    ".config/bottombar",
     ".config/colors.sh",
     ".config/icons.sh",
     ".config/nvim",
