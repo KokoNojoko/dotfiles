@@ -6,8 +6,17 @@ source "$HOME/.config/icons.sh"
 IFACE=$(networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2; exit}')
 WIFI=$(ipconfig getsummary "${IFACE:-en0}" 2>/dev/null | awk -F ' SSID : ' '/ SSID : /{print $2; exit}')
 if [[ -z "$WIFI" || "$WIFI" == "<redacted>" ]]; then
-  # macOS hides SSIDs from CLI tools; the Shortcuts app is allowed to read it
-  WIFI=$(shortcuts run "Current Wi-Fi" 2>/dev/null | tr -d '\n')
+  # macOS hides SSIDs from CLI tools; the Shortcuts app is allowed to read it.
+  # Every `shortcuts run` spawns a Live Activity, and running it on the 5s timer
+  # leaked ~88 GB in WidgetRenderer_Activities. So only call the shortcut when
+  # the network actually changes (or at startup/wake); otherwise reuse the cache.
+  CACHE="${TMPDIR:-/tmp}/sketchybar_wifi_ssid"
+  if [[ "$SENDER" == "routine" && -f "$CACHE" ]]; then
+    WIFI=$(cat "$CACHE")
+  else
+    WIFI=$(shortcuts run "Current Wi-Fi" 2>/dev/null | tr -d '\n')
+    printf '%s' "$WIFI" > "$CACHE"
+  fi
 fi
 IP_ADDRESS=$(scutil --nwi | grep address | sed 's/.*://' | tr -d ' ' | head -1)
 VPN=$(scutil --nwi | grep -m1 'VPN' | awk '{ print $4 }')

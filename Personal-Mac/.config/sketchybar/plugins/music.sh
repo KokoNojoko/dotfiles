@@ -11,7 +11,8 @@ if [ -n "$INFO" ]; then
   if [ "$APP" != "Music" ] && [ "$APP" != "" ]; then
     exit 0
   fi
-else
+elif pgrep -xq Music; then
+  # Only query Music if it is already running; `tell application` would launch it
   STATE=$(osascript -e 'tell application "Music" to get player state as string' 2>/dev/null)
   TITLE=$(osascript -e 'tell application "Music" to get name of current track' 2>/dev/null)
   ARTIST=$(osascript -e 'tell application "Music" to get artist of current track' 2>/dev/null)
